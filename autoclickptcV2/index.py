@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from anticaptchaofficial.recaptchav2proxyless import *
 import time
-import pyautogui
+# import pyautogui
 
 username = input('Digite o usuário? ')
 senha = input('Digite a sua senha? ')
@@ -25,8 +25,15 @@ def viewcont ():
     print(CONT_GLOBAL)
 
 def glob():
+    # options = webdriver.ChromeOptions()
+    # options.add_argument("--headless")
+
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
+    options.add_argument("disable-notifications")
+    chrome_prefs = {}
+    options.experimental_options["prefs"] = chrome_prefs
+    chrome_prefs["profile.default_content_settings"] = {"popups": 0}
     navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     navegador.set_window_position(1, 1)
     navegador.set_window_size(400, 700)
@@ -35,9 +42,22 @@ def glob():
     print('carregou broser - 2')
 
     time.sleep(10)
-    navegador.find_element_by_css_selector(
-        'body > div.cookies-card.text-center > div.cookies-card__btn.mt-4 > a').click()
-    print('clicou em ALLOW - 3')
+    allow = False
+
+    while allow == False:
+        try:
+
+            # navegador.find_element_by_css_selector(
+            #     'body > div.cookies-card.text-center > div.cookies-card__btn.mt-4 > a').click()
+            navegador.find_element(By.CSS_SELECTOR, 'body > div.cookies-card.text-center > div.cookies-card__btn.mt-4 > a').click()
+            print('clicou em ALLOW - 3')
+            allow = True
+            time.sleep(2)
+        except:
+            print('NÃO clicou em ALLOW - 3')
+            time.sleep(2)
+
+            allow == False
     # time.sleep(3000000)
     def contexto():
         try:
@@ -52,8 +72,7 @@ def glob():
 
             time.sleep(5)
 
-            navegador.find_element_by_css_selector(
-                'body > div.page-wrapper > section.cmn-section > div > div > div:nth-child(1) > div > div > div > div.col-4.text-end > a').click()
+            navegador.find_element(By.CSS_SELECTOR, 'body > div.page-wrapper > section.cmn-section > div > div > div:nth-child(1) > div > div > div > div.col-4.text-end > a').click()
 
             print('Tela de propaganda 60 segundos de espera - 15')
 
@@ -78,6 +97,16 @@ def glob():
             print('Confirmou o resultado - 18')
 
             time.sleep(10)
+
+            time.sleep(5)
+            global CONT_GLOBAL
+            cont = CONT_GLOBAL
+
+
+            cont += 1
+            CONT_GLOBAL = cont
+            print('Incrementou')
+            viewcont()
 
             # global CONT_GLOBAL
             #
@@ -115,8 +144,11 @@ def glob():
     print('tela dasboard - 6')
     navegador.execute_script((f"window.scroll(0, 2000)"))
     print('cscroll em dasboard - 7')
+    # time.sleep(3)
+    # navegador.execute_script((f"window.scroll(0, -150)"))
+
     time.sleep(5)
-    navegador.find_element_by_css_selector('body > div.page-wrapper > section.cmn-section > div > div > a:nth-child(7)').click()
+    navegador.find_element(By.CSS_SELECTOR,'body > div.page-wrapper > section.cmn-section > div > div > a:nth-child(7)').click()
     print('clicou no elemento dasboard - 8')
     time.sleep(8)
 
@@ -152,9 +184,9 @@ def glob():
 
     while cont <= limite:
         contexto()
-        cont += 1
-        CONT_GLOBAL = cont
-        print('Incrementou - 12')
+        # cont += 1
+        # CONT_GLOBAL = cont
+        # print('Incrementou - 12')
         viewcont()
 
 
