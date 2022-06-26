@@ -30,8 +30,8 @@ import urllib
 # CONT_GLOBAL = int(0)
 # time.sleep(3)
 
-username = 'ladydipaula1987'
-senha = 'Fa158__@@'
+username = ''
+senha = ''
 limite = int(141)
 CONT_GLOBAL = int(0)
 time.sleep(3)

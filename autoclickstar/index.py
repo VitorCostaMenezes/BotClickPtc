@@ -14,8 +14,8 @@ limite = int(input('Deseja executar quantas vezes? '))
 CONT_GLOBAL = int(0)
 time.sleep(3)
 
-# username = 'ladydipaula'
-# senha = 'Fa158__@@'
+# username = ''
+# senha = ''
 # limite = int(100)
 # CONT_GLOBAL = int(0)
 # time.sleep(3)
