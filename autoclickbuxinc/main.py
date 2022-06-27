@@ -26,17 +26,19 @@ import urllib
 
 username = input('Digite o usuário? ')
 senha = input('Digite a sua senha? ')
-limite = int(input('Deseja executar quantas vezes? '))
-limite_gasto = int(input(' !!!! Quantos clicks ja foram realizados hoje?!!!  CASO NÃO TENHA FEITO NENHUM CLICK DIGITE O NUMERO: 0'))
-CONT_GLOBAL = limite_gasto
+limite_coletado = int(input('Deseja executar quantas vezes? >>>>>>> '))
+# limite_gasto = int(input(' !!!! Quantos clicks ja foram realizados hoje?!!!  CASO NÃO TENHA FEITO NENHUM CLICK DIGITE O NUMERO: 0'))
+# CONT_GLOBAL = limite_gasto
 # CONT_GLOBAL = int(0)
-time.sleep(3)
+# time.sleep(3)
 
 # username = ''
 # senha = ''
-# limite = int(8)
-# CONT_GLOBAL = int(0)
-# time.sleep(3)
+limite = int(20) + limite_coletado
+CONT_GLOBAL = int(0)
+time.sleep(3)
+
+TOTAL_LINK = 0
 
 def viewcont ():
     print('CLICKS CONFIRMADOS: ', CONT_GLOBAL)
@@ -105,11 +107,51 @@ def glob():
 
     def clicklink():
 
-        coluna = CONT_GLOBAL +1
-        navegador.execute_script(
-            f"document.querySelector('#col"+str(coluna)+" > td:nth-child(2) > a').removeAttribute('target')")
+        # coluna = CONT_GLOBAL +1
+        global CONT_GLOBAL
+        coluna = CONT_GLOBAL
 
-        navegador.find_element(By.CSS_SELECTOR, '#col'+str(coluna)+' > td:nth-child(2) > a').click()
+        # navegador.execute_script(
+        #     f"document.querySelector('#col"+str(coluna)+" > td:nth-child(2) > a').removeAttribute('target')")
+        #
+        # navegador.find_element(By.CSS_SELECTOR, '#col'+str(coluna)+' > td:nth-child(2) > a').click()
+
+        cont_col = -5
+
+        # try:
+        #     qt = navegador.find_elements(By.CLASS_NAME, 'zebra2').__sizeof__()
+        #
+        #
+        #
+        #     print(qt)
+        #     time.sleep(30)
+        #
+        #
+        #
+        # except:
+        #     qt =  navegador.find_elements(By.CSS_SELECTOR, '#col').count()
+
+        while cont_col < limite:
+            try:
+                navegador.find_element(By.CSS_SELECTOR, '#col' + str(cont_col))
+                navegador.execute_script(
+                    f"document.querySelector('#col" + str(cont_col) + " > td:nth-child(2) > a').removeAttribute('target')")
+                navegador.find_element(By.CSS_SELECTOR, '#col' + str(cont_col) + ' > td:nth-child(2) > a').click()
+
+                print('coluna:', cont_col, 'encontrada')
+
+                break
+            except:
+                print('coluna:', cont_col, 'não encontrada')
+                cont_col += 1
+                time.sleep(0.5)
+
+        if cont_col >= limite:
+            print('Não existem mais ADS dispiniveis por hoje')
+            time.sleep(10)
+            navegador.quit()
+            exit()
+
         time.sleep(40)
 
         navegador.switch_to.frame('surftopframe')
@@ -195,6 +237,7 @@ def glob():
         # navegador.switch_to.frame('surftopframe')
         time.sleep(5)
 
+        # if um >= 0.9:
         if um >= 0.9:
             navegador.find_element(By.CSS_SELECTOR, '#buttons > map > area:nth-child(1)').click()
         elif dois >= 0.9:
@@ -210,8 +253,18 @@ def glob():
 
         time.sleep(8)
 
-        # link = "http://www.buxinc.com/index.php?view=click&sid=151407T0RnNE1qUTJORE&sid2=15140&siduid=151407&"
-        # navegador.get(link)
+
+        # try:
+        #
+        #         print('decrementou')
+        #
+        #
+        # except:
+        #
+        #
+        #
+        #     print('segue normal')
+
 
         navegador.back()
         time.sleep(2)
