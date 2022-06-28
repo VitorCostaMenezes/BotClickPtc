@@ -201,7 +201,7 @@ def check_internet():
         return False
 
 
-while CONT_GLOBAL <= limite:
+while CONT_GLOBAL < limite:
     try:
         glob()
     except Exception as erro:
